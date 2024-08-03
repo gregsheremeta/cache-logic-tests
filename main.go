@@ -11,8 +11,8 @@ const dashes string = "---------------------------------------------------------
 type CacheUsage int
 
 const (
-	NoCache CacheUsage = iota
-	UseCache
+	CacheDisabled CacheUsage = iota
+	CacheEnabled
 	NotSet
 )
 
@@ -26,10 +26,10 @@ func getFunctionName(f interface{}) string {
 func main() {
 	var algorithm algorithmToTest
 
-	algorithm = shouldTryToUseCache
+	algorithm = isCacheEnabled
 	runAllTestsUsingAlgorithm(algorithm)
 
-	algorithm = shouldTryToUseCache_UsingOnlyBooleans
+	algorithm = isCacheEnabled_UsingOnlyBooleans
 	runAllTestsUsingAlgorithm(algorithm)
 }
 
@@ -37,134 +37,134 @@ func runAllTestsUsingAlgorithm(algorithm algorithmToTest) {
 
 	fmt.Printf("\n%s\n%s\nrunning all tests using algorithm: %s\n%s\n%s\n", dashes, dashes, getFunctionName(algorithm), dashes, dashes)
 
-	testDescription := "server allows caching, but it was not requested at any level"
-	serverLevelForceDisabled := false
+	testDescription := "server supports caching, but it was not enabled at any level"
+	serverLevelCachingSupported := true
 	runLevel := NotSet
 	componentLevel := NotSet
 	pipelineLevel := NotSet
 	expected := false
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server disables all caching, random settings at other levels"
-	serverLevelForceDisabled = true
+	testDescription = "server set all caching unsupported, random settings at other levels"
+	serverLevelCachingSupported = false
 	runLevel = NotSet
 	componentLevel = NotSet
 	pipelineLevel = NotSet
 	expected = false
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server disables all caching, random settings at other levels 2"
-	serverLevelForceDisabled = true
-	runLevel = UseCache
+	testDescription = "server set all caching unsupported, random settings at other levels 2"
+	serverLevelCachingSupported = false
+	runLevel = CacheEnabled
 	componentLevel = NotSet
-	pipelineLevel = UseCache
+	pipelineLevel = CacheEnabled
 	expected = false
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server disables all caching, random settings at other levels 3"
-	serverLevelForceDisabled = true
+	testDescription = "server set all caching unsupported, random settings at other levels 3"
+	serverLevelCachingSupported = false
 	runLevel = NotSet
-	componentLevel = NoCache
-	pipelineLevel = UseCache
+	componentLevel = CacheDisabled
+	pipelineLevel = CacheEnabled
 	expected = false
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	// the following block of tests check for when only one level is set to UseCache
+	// the following block of tests check for when only one level is set to CacheEnabled
 
-	testDescription = "server allows caching, requested only at run level"
-	serverLevelForceDisabled = false
-	runLevel = UseCache
+	testDescription = "server supports caching, enabled only at run level"
+	serverLevelCachingSupported = true
+	runLevel = CacheEnabled
 	componentLevel = NotSet
 	pipelineLevel = NotSet
 	expected = true
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server allows caching, requested only at component level"
-	serverLevelForceDisabled = false
+	testDescription = "server supports caching, enabled only at component level"
+	serverLevelCachingSupported = true
 	runLevel = NotSet
-	componentLevel = UseCache
+	componentLevel = CacheEnabled
 	pipelineLevel = NotSet
 	expected = true
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server allows caching, requested only at pipeline level"
-	serverLevelForceDisabled = false
+	testDescription = "server supports caching, enabled only at pipeline level"
+	serverLevelCachingSupported = true
 	runLevel = NotSet
 	componentLevel = NotSet
-	pipelineLevel = UseCache
+	pipelineLevel = CacheEnabled
 	expected = true
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	// the following block of tests check for when a lower precedence level is set to NoCache, but a higher precedence level is set to UseCache.
+	// the following block of tests check for when a lower precedence level is set to CacheDisabled, but a higher precedence level is set to CacheEnabled.
 	// the higher precedence level should win
 
-	testDescription = "server allows caching, disabled at pipeline level, but requested at run level (run level should take precedence)"
-	serverLevelForceDisabled = false
-	runLevel = UseCache
+	testDescription = "server supports caching, disabled at pipeline level, but enabled at run level (run level should take precedence)"
+	serverLevelCachingSupported = true
+	runLevel = CacheEnabled
 	componentLevel = NotSet
-	pipelineLevel = NoCache
+	pipelineLevel = CacheDisabled
 	expected = true
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server allows caching, disabled at component level, but requested at run level (run level should take precedence)"
-	serverLevelForceDisabled = false
-	runLevel = UseCache
-	componentLevel = NoCache
+	testDescription = "server supports caching, disabled at component level, but enabled at run level (run level should take precedence)"
+	serverLevelCachingSupported = true
+	runLevel = CacheEnabled
+	componentLevel = CacheDisabled
 	pipelineLevel = NotSet
 	expected = true
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server allows caching, disabled at pipeline level, but requested at component level (component level should take precedence)"
-	serverLevelForceDisabled = false
+	testDescription = "server supports caching, disabled at pipeline level, but enabled at component level (component level should take precedence)"
+	serverLevelCachingSupported = true
 	runLevel = NotSet
-	componentLevel = UseCache
-	pipelineLevel = NoCache
+	componentLevel = CacheEnabled
+	pipelineLevel = CacheDisabled
 	expected = true
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
 	// the following block of tests is the same as above, but the requests are just flipped.
-	// so, check for when a lower precedence level is set to UseCache, but a higher precedence level is set to NoCache.
+	// so, check for when a lower precedence level is set to CacheEnabled, but a higher precedence level is set to CacheDisabled.
 	// the higher precedence level should win
 
-	testDescription = "server allows caching, requested at pipeline level, but disabled at run level (run level should take precedence)"
-	serverLevelForceDisabled = false
-	runLevel = NoCache
+	testDescription = "server supports caching, enabled at pipeline level, but disabled at run level (run level should take precedence)"
+	serverLevelCachingSupported = true
+	runLevel = CacheDisabled
 	componentLevel = NotSet
-	pipelineLevel = UseCache
+	pipelineLevel = CacheEnabled
 	expected = false
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server allows caching, requested at component level, but disabled at run level (run level should take precedence)"
-	serverLevelForceDisabled = false
-	runLevel = NoCache
-	componentLevel = UseCache
+	testDescription = "server supports caching, enabled at component level, but disabled at run level (run level should take precedence)"
+	serverLevelCachingSupported = true
+	runLevel = CacheDisabled
+	componentLevel = CacheEnabled
 	pipelineLevel = NotSet
 	expected = false
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	testDescription = "server allows caching, requested at pipeline level, but disabled at component level (component level should take precedence)"
-	serverLevelForceDisabled = false
+	testDescription = "server supports caching, enabled at pipeline level, but disabled at component level (component level should take precedence)"
+	serverLevelCachingSupported = true
 	runLevel = NotSet
-	componentLevel = NoCache
-	pipelineLevel = UseCache
+	componentLevel = CacheDisabled
+	pipelineLevel = CacheEnabled
 	expected = false
-	runTestAndPrintResults(algorithm, testDescription, serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel, expected)
+	runTestAndPrintResults(algorithm, testDescription, serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel, expected)
 
-	// Notice that the previous block all work in `shouldTryToUseCache` but not in `shouldTryToUseCache_UsingOnlyBooleans` !!
+	// Notice that the previous block all work in `isCacheEnabled` but not in `isCacheEnabled_UsingOnlyBooleans` !!
 	// This is because the latter does not have the concept of NotSet.
 	//
 	// What happens is that any time a higher precendence level says "I definitely don't want cache",
 	// the lower precedence levels are winning when they are true!
-	// This happens because basically shouldTryToUseCache_UsingOnlyBooleans is a giant boolean OR !!
+	// This happens because basically isCacheEnabled_UsingOnlyBooleans is a giant boolean OR !!
 	// It will say "yes I want cache" if ANY of the levels say they want cache, which is not what we want.
 	// The precedence is not respected when using only booleans.
 
 }
 
-func runTestAndPrintResults(algorithm algorithmToTest, testDescription string, serverLevelForceDisabled bool, runLevel CacheUsage, componentLevel CacheUsage, pipelineLevel CacheUsage, expected bool) {
+func runTestAndPrintResults(algorithm algorithmToTest, testDescription string, serverLevelCachingSupported bool, runLevel CacheUsage, componentLevel CacheUsage, pipelineLevel CacheUsage, expected bool) {
 	fmt.Printf("\n\nrunning test case [%s]...\n%s\n", testDescription, dashes)
-	result := algorithm(serverLevelForceDisabled, runLevel, componentLevel, pipelineLevel)
-	fmt.Printf("shouldTryToUseCache: %v \t expected: %v\n", result, expected)
+	result := algorithm(serverLevelCachingSupported, runLevel, componentLevel, pipelineLevel)
+	fmt.Printf("isCacheEnabled: %v \t expected: %v\n", result, expected)
 	if result != expected {
 		fmt.Println("!!!!!!!!!!!!!!!! TEST FAILED !!!!!!!!!!!!!!!!")
 	} else {
@@ -176,50 +176,50 @@ func runTestAndPrintResults(algorithm algorithmToTest, testDescription string, s
 // below are the various algorithms to test
 ///////////////////////////////////////////
 
-// this algorithm uses switches with 3 values - UseCache, NoCache, NotSet
-func shouldTryToUseCache(serverLevelForceDisabled bool, runLevel CacheUsage, componentLevel CacheUsage, pipelineLevel CacheUsage) bool {
+// this algorithm uses switches with 3 values - CacheEnabled, CacheDisabled, NotSet
+func isCacheEnabled(serverLevelCachingSupported bool, runLevel CacheUsage, componentLevel CacheUsage, pipelineLevel CacheUsage) bool {
 
-	if serverLevelForceDisabled == true {
-		fmt.Println("will NOT try to use cache because it was globally disabled at the server level")
+	if !serverLevelCachingSupported {
+		fmt.Println("caching is disabled for this component (will NOT try to use cache) because it was set to unsupported (globally disabled) at the server level")
 		return false
 	}
 
-	// if we're here, serverLevelForceDisabled was false
-	fmt.Println("the server-wide force caching disabled is not set. Will proceed to check the other levels")
+	// if we're here, serverLevelCachingSupported was true
+	fmt.Println("the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those")
 
-	if runLevel == UseCache {
-		fmt.Println("will try to use cache because it was requested at Run time")
+	if runLevel == CacheEnabled {
+		fmt.Println("will try to use cache because it was enabled at Run time")
 		return true
 	}
 
-	if runLevel == NoCache {
-		fmt.Println("will NOT try to use cache because it was requested not to at Run time")
+	if runLevel == CacheDisabled {
+		fmt.Println("will NOT try to use cache because it was disabled at Run time")
 		return false
 	}
 
 	// if we're here, run level was NotSet
 	fmt.Println("no caching setting was found at the run level. Will now check the component level")
 
-	if componentLevel == UseCache {
-		fmt.Println("will try to use cache because it was requested at the component level")
+	if componentLevel == CacheEnabled {
+		fmt.Println("will try to use cache because it was enabled at the component level")
 		return true
 	}
 
-	if componentLevel == NoCache {
-		fmt.Println("will NOT try to use cache because it was requested not to at the component {{component_name}} level")
+	if componentLevel == CacheDisabled {
+		fmt.Println("will NOT try to use cache because it was disabled at the component {{component_name}} level")
 		return false
 	}
 
 	// if we're here, run level was NotSet
 	fmt.Println("no caching setting was found at the component level. Will now check the pipeline level")
 
-	if pipelineLevel == UseCache {
-		fmt.Println("will try to use cache because it was requested at the pipeline level")
+	if pipelineLevel == CacheEnabled {
+		fmt.Println("will try to use cache because it was enabled at the pipeline level")
 		return true
 	}
 
-	if pipelineLevel == NoCache {
-		fmt.Println("will NOT try to use cache because it was requested not to at the pipeline level")
+	if pipelineLevel == CacheDisabled {
+		fmt.Println("will NOT try to use cache because it was disabled at the pipeline level")
 		return false
 	}
 
@@ -227,38 +227,38 @@ func shouldTryToUseCache(serverLevelForceDisabled bool, runLevel CacheUsage, com
 	fmt.Println("no caching setting was found at the pipeline level")
 
 	// overall default case is here. Default is no cache!
-	fmt.Println("skipped caching. It wasn't disabled globally, but it wasn't requested at any level")
+	fmt.Println("skipped caching. It wasn't disabled globally, but it wasn't enabled at any level")
 	return false
 }
 
 // this algorithm uses booleans - no concept of NotSet
-func shouldTryToUseCache_UsingOnlyBooleans(serverLevelForceDisabled bool, runLevel CacheUsage, componentLevel CacheUsage, pipelineLevel CacheUsage) bool {
+func isCacheEnabled_UsingOnlyBooleans(serverLevelCachingSupported bool, runLevel CacheUsage, componentLevel CacheUsage, pipelineLevel CacheUsage) bool {
 
-	if serverLevelForceDisabled == true {
-		fmt.Println("will NOT try to use cache because it was globally disabled at the server level")
+	if !serverLevelCachingSupported {
+		fmt.Println("caching is disabled for this component (will NOT try to use cache) because it was set to unsupported (globally disabled) at the server level")
 		return false
 	}
 
-	// make the booleans
-	runLevelBoolean := runLevel == UseCache
-	componentLevelBoolean := componentLevel == UseCache
-	pipelineLevelBoolean := pipelineLevel == UseCache
+	// if we're here, serverLevelCachingSupported was true
+	fmt.Println("the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those")
 
-	// if we're here, serverLevelForceDisabled was false
-	fmt.Println("the server-wide force caching disabled is not set. Will proceed to check the other levels")
+	// make the booleans
+	runLevelBoolean := runLevel == CacheEnabled
+	componentLevelBoolean := componentLevel == CacheEnabled
+	pipelineLevelBoolean := pipelineLevel == CacheEnabled
 
 	if runLevelBoolean {
-		fmt.Println("will try to use cache because it was requested at Run time")
+		fmt.Println("will try to use cache because it was enabled at Run time")
 		return true
 	}
 
 	if componentLevelBoolean {
-		fmt.Println("will try to use cache because it was requested at the component level")
+		fmt.Println("will try to use cache because it was enabled at the component level")
 		return true
 	}
 
 	if pipelineLevelBoolean {
-		fmt.Println("will try to use cache because it was requested at the pipeline level")
+		fmt.Println("will try to use cache because it was enabled at the pipeline level")
 		return true
 	}
 
@@ -267,6 +267,6 @@ func shouldTryToUseCache_UsingOnlyBooleans(serverLevelForceDisabled bool, runLev
 	// not what we want!
 
 	// overall default case is here. Default is no cache!
-	fmt.Println("skipped caching. It wasn't disabled globally, but it wasn't requested at any level")
+	fmt.Println("skipped caching. It wasn't disabled globally, but it wasn't enabled at any level")
 	return false
 }

@@ -2,222 +2,222 @@ $ go run main.go
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
-running all tests using algorithm: main.shouldTryToUseCache
+running all tests using algorithm: main.isCacheEnabled
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
 
-running test case [server allows caching, but it was not requested at any level]...
+running test case [server supports caching, but it was not enabled at any level]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
 no caching setting was found at the run level. Will now check the component level
 no caching setting was found at the component level. Will now check the pipeline level
 no caching setting was found at the pipeline level
-skipped caching. It wasn't disabled globally, but it wasn't requested at any level
-shouldTryToUseCache: false 	 expected: false
+skipped caching. It wasn't disabled globally, but it wasn't enabled at any level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server disables all caching, random settings at other levels]...
+running test case [server set all caching unsupported, random settings at other levels]...
 ------------------------------------------------------------------------------
-will NOT try to use cache because it was globally disabled at the server level
-shouldTryToUseCache: false 	 expected: false
+caching is disabled for this component (will NOT try to use cache) because it was set to unsupported (globally disabled) at the server level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server disables all caching, random settings at other levels 2]...
+running test case [server set all caching unsupported, random settings at other levels 2]...
 ------------------------------------------------------------------------------
-will NOT try to use cache because it was globally disabled at the server level
-shouldTryToUseCache: false 	 expected: false
+caching is disabled for this component (will NOT try to use cache) because it was set to unsupported (globally disabled) at the server level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server disables all caching, random settings at other levels 3]...
+running test case [server set all caching unsupported, random settings at other levels 3]...
 ------------------------------------------------------------------------------
-will NOT try to use cache because it was globally disabled at the server level
-shouldTryToUseCache: false 	 expected: false
+caching is disabled for this component (will NOT try to use cache) because it was set to unsupported (globally disabled) at the server level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server allows caching, requested only at run level]...
+running test case [server supports caching, enabled only at run level]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at Run time
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at Run time
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, requested only at component level]...
+running test case [server supports caching, enabled only at component level]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
 no caching setting was found at the run level. Will now check the component level
-will try to use cache because it was requested at the component level
-shouldTryToUseCache: true 	 expected: true
+will try to use cache because it was enabled at the component level
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, requested only at pipeline level]...
+running test case [server supports caching, enabled only at pipeline level]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
 no caching setting was found at the run level. Will now check the component level
 no caching setting was found at the component level. Will now check the pipeline level
-will try to use cache because it was requested at the pipeline level
-shouldTryToUseCache: true 	 expected: true
+will try to use cache because it was enabled at the pipeline level
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, disabled at pipeline level, but requested at run level (run level should take precedence)]...
+running test case [server supports caching, disabled at pipeline level, but enabled at run level (run level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at Run time
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at Run time
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, disabled at component level, but requested at run level (run level should take precedence)]...
+running test case [server supports caching, disabled at component level, but enabled at run level (run level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at Run time
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at Run time
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, disabled at pipeline level, but requested at component level (component level should take precedence)]...
+running test case [server supports caching, disabled at pipeline level, but enabled at component level (component level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
 no caching setting was found at the run level. Will now check the component level
-will try to use cache because it was requested at the component level
-shouldTryToUseCache: true 	 expected: true
+will try to use cache because it was enabled at the component level
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, requested at pipeline level, but disabled at run level (run level should take precedence)]...
+running test case [server supports caching, enabled at pipeline level, but disabled at run level (run level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will NOT try to use cache because it was requested not to at Run time
-shouldTryToUseCache: false 	 expected: false
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will NOT try to use cache because it was disabled at Run time
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server allows caching, requested at component level, but disabled at run level (run level should take precedence)]...
+running test case [server supports caching, enabled at component level, but disabled at run level (run level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will NOT try to use cache because it was requested not to at Run time
-shouldTryToUseCache: false 	 expected: false
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will NOT try to use cache because it was disabled at Run time
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server allows caching, requested at pipeline level, but disabled at component level (component level should take precedence)]...
+running test case [server supports caching, enabled at pipeline level, but disabled at component level (component level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
 no caching setting was found at the run level. Will now check the component level
-will NOT try to use cache because it was requested not to at the component {{component_name}} level
-shouldTryToUseCache: false 	 expected: false
+will NOT try to use cache because it was disabled at the component {{component_name}} level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
-running all tests using algorithm: main.shouldTryToUseCache_UsingOnlyBooleans
+running all tests using algorithm: main.isCacheEnabled_UsingOnlyBooleans
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
 
-running test case [server allows caching, but it was not requested at any level]...
+running test case [server supports caching, but it was not enabled at any level]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-skipped caching. It wasn't disabled globally, but it wasn't requested at any level
-shouldTryToUseCache: false 	 expected: false
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+skipped caching. It wasn't disabled globally, but it wasn't enabled at any level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server disables all caching, random settings at other levels]...
+running test case [server set all caching unsupported, random settings at other levels]...
 ------------------------------------------------------------------------------
-will NOT try to use cache because it was globally disabled at the server level
-shouldTryToUseCache: false 	 expected: false
+caching is disabled for this component (will NOT try to use cache) because it was set to unsupported (globally disabled) at the server level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server disables all caching, random settings at other levels 2]...
+running test case [server set all caching unsupported, random settings at other levels 2]...
 ------------------------------------------------------------------------------
-will NOT try to use cache because it was globally disabled at the server level
-shouldTryToUseCache: false 	 expected: false
+caching is disabled for this component (will NOT try to use cache) because it was set to unsupported (globally disabled) at the server level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server disables all caching, random settings at other levels 3]...
+running test case [server set all caching unsupported, random settings at other levels 3]...
 ------------------------------------------------------------------------------
-will NOT try to use cache because it was globally disabled at the server level
-shouldTryToUseCache: false 	 expected: false
+caching is disabled for this component (will NOT try to use cache) because it was set to unsupported (globally disabled) at the server level
+isCacheEnabled: false 	 expected: false
 TEST PASSED
 
 
-running test case [server allows caching, requested only at run level]...
+running test case [server supports caching, enabled only at run level]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at Run time
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at Run time
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, requested only at component level]...
+running test case [server supports caching, enabled only at component level]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at the component level
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at the component level
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, requested only at pipeline level]...
+running test case [server supports caching, enabled only at pipeline level]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at the pipeline level
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at the pipeline level
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, disabled at pipeline level, but requested at run level (run level should take precedence)]...
+running test case [server supports caching, disabled at pipeline level, but enabled at run level (run level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at Run time
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at Run time
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, disabled at component level, but requested at run level (run level should take precedence)]...
+running test case [server supports caching, disabled at component level, but enabled at run level (run level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at Run time
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at Run time
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, disabled at pipeline level, but requested at component level (component level should take precedence)]...
+running test case [server supports caching, disabled at pipeline level, but enabled at component level (component level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at the component level
-shouldTryToUseCache: true 	 expected: true
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at the component level
+isCacheEnabled: true 	 expected: true
 TEST PASSED
 
 
-running test case [server allows caching, requested at pipeline level, but disabled at run level (run level should take precedence)]...
+running test case [server supports caching, enabled at pipeline level, but disabled at run level (run level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at the pipeline level
-shouldTryToUseCache: true 	 expected: false
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at the pipeline level
+isCacheEnabled: true 	 expected: false
 !!!!!!!!!!!!!!!! TEST FAILED !!!!!!!!!!!!!!!!
 
 
-running test case [server allows caching, requested at component level, but disabled at run level (run level should take precedence)]...
+running test case [server supports caching, enabled at component level, but disabled at run level (run level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at the component level
-shouldTryToUseCache: true 	 expected: false
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at the component level
+isCacheEnabled: true 	 expected: false
 !!!!!!!!!!!!!!!! TEST FAILED !!!!!!!!!!!!!!!!
 
 
-running test case [server allows caching, requested at pipeline level, but disabled at component level (component level should take precedence)]...
+running test case [server supports caching, enabled at pipeline level, but disabled at component level (component level should take precedence)]...
 ------------------------------------------------------------------------------
-the server-wide force caching disabled is not set. Will proceed to check the other levels
-will try to use cache because it was requested at the pipeline level
-shouldTryToUseCache: true 	 expected: false
+the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
+will try to use cache because it was enabled at the pipeline level
+isCacheEnabled: true 	 expected: false
 !!!!!!!!!!!!!!!! TEST FAILED !!!!!!!!!!!!!!!!

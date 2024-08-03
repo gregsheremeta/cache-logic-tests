@@ -1,5 +1,5 @@
 
-if cache is enabled {
+if cache_is_enabled {
 	// try to hit the cache
 	err, got_a_cache_hit := check_cache()
 	if err := nil {
