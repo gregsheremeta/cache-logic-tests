@@ -13,7 +13,7 @@ the server-wide caching supported setting is true. Caching is not globally unsup
 no caching setting was found at the run level. Will now check the component level
 no caching setting was found at the component level. Will now check the pipeline level
 no caching setting was found at the pipeline level
-skipped caching. It wasn't disabled globally, but it wasn't enabled at any level
+caching is disabled for this component (will NOT try to use cache) because it wasn't enabled at any level
 isCacheEnabled: false 	 expected: false
 TEST PASSED
 
@@ -111,7 +111,7 @@ running test case [server supports caching, enabled at pipeline level, but disab
 ------------------------------------------------------------------------------
 the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
 no caching setting was found at the run level. Will now check the component level
-will NOT try to use cache because it was disabled at the component {{component_name}} level
+will NOT try to use cache because it was disabled at the component level
 isCacheEnabled: false 	 expected: false
 TEST PASSED
 
@@ -125,7 +125,7 @@ running all tests using algorithm: main.isCacheEnabled_UsingOnlyBooleans
 running test case [server supports caching, but it was not enabled at any level]...
 ------------------------------------------------------------------------------
 the server-wide caching supported setting is true. Caching is not globally unsupported. Will proceed to check the other levels to see if caching is enabled in any of those
-skipped caching. It wasn't disabled globally, but it wasn't enabled at any level
+caching is disabled for this component (will NOT try to use cache) because it wasn't enabled at any level
 isCacheEnabled: false 	 expected: false
 TEST PASSED
 
