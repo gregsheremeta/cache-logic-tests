@@ -227,7 +227,7 @@ func isCacheEnabled(serverLevelCachingSupported bool, runLevel CacheUsage, compo
 	fmt.Println("no caching setting was found at the pipeline level")
 
 	// overall default case is here. Default is no cache!
-	fmt.Println("skipped caching. It wasn't globally unsupported (force-disabled) by an admin, but it wasn't enabled at any level")
+	fmt.Println("caching is disabled for this component (will NOT try to use cache) because it wasn't enabled at any level")
 	return false
 }
 
@@ -267,6 +267,6 @@ func isCacheEnabled_UsingOnlyBooleans(serverLevelCachingSupported bool, runLevel
 	// not what we want!
 
 	// overall default case is here. Default is no cache!
-	fmt.Println("skipped caching. It wasn't globally unsupported (force-disabled) by an admin, but it wasn't enabled at any level")
+	fmt.Println("caching is disabled for this component (will NOT try to use cache) because it wasn't enabled at any level")
 	return false
 }
