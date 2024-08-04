@@ -2,7 +2,7 @@
 if cache_is_enabled {
 	// try to hit the cache
 	err, got_a_cache_hit := check_cache()
-	if err := nil {
+	if err != nil {
 		log(“tried to use cache, but hit an error! Will treat as a cache miss and proceed with podSpecPatch.”)
 		// fall through to pod spec patch code below
 	}
